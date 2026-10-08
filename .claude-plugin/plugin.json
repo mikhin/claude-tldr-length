@@ -1,0 +1,12 @@
+{
+  "name": "tldr-length",
+  "version": "0.1.0",
+  "description": "Sends a long answer back once to be rewritten as a tldr",
+  "author": {
+    "name": "Yuri Mikhin",
+    "url": "https://github.com/mikhin"
+  },
+  "homepage": "https://github.com/mikhin/claude-tldr-length",
+  "repository": "https://github.com/mikhin/claude-tldr-length",
+  "license": "MIT"
+}

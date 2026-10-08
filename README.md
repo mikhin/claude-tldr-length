@@ -13,22 +13,12 @@ terms coined in this session.
 
 ## Install
 
-```sh
-curl -o ~/.claude/hooks/tldr-length.mjs \
-  https://raw.githubusercontent.com/mikhin/claude-tldr-length/main/tldr-length.mjs
+```
+/plugin marketplace add mikhin/claude-plugins
+/plugin install tldr-length@mikhin
 ```
 
-Then in `~/.claude/settings.json`:
-
-```json
-{
-  "hooks": {
-    "Stop": [
-      { "hooks": [{ "type": "command", "command": "node ~/.claude/hooks/tldr-length.mjs" }] }
-    ]
-  }
-}
-```
+Installed it with `curl` before? Remove its entry from `~/.claude/settings.json`, or it runs twice.
 
 Needs Node 18+.
 
