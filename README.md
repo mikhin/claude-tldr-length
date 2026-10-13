@@ -28,7 +28,10 @@ Needs Node 18+.
 | ------------ | ------- | -------------------------------------------- |
 | `TLDR_LIMIT` | `600`   | Longest answer, in characters, let through   |
 
-A prompt containing `подробно` or `detail` lets a long answer through.
+A prompt containing `подробно` or `detail` lets a long answer through. Only a prompt you typed
+counts, not a task notification.
+
+`node tldr-length.mjs --test` runs the self-check.
 
 ## How it works
 

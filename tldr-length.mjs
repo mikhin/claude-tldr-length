@@ -4,7 +4,7 @@
 import { readFileSync } from "node:fs";
 
 const LIMIT = Number(process.env.TLDR_LIMIT ?? 600);
-const DETAIL = /подробн|detail/i;
+const DETAIL = /подробн|\bdetail/i;
 
 async function readInput() {
   let text = "";
@@ -30,6 +30,8 @@ const textOf = (content) =>
 
 const isPrompt = (entry) =>
   entry.type === "user" &&
+  // A task notification is a user entry too; older transcripts have no origin.
+  (entry.origin?.kind ?? "human") === "human" &&
   !entry.isMeta &&
   !entry.isSidechain &&
   textOf(entry.message?.content).trim() !== "";
@@ -45,6 +47,22 @@ export const lastTurn = (lines) => {
     .trim();
   return { answer, prompt: start < 0 ? "" : textOf(entries[start].message.content) };
 };
+
+if (process.argv.includes("--test")) {
+  const { default: assert } = await import("node:assert/strict");
+  const line = (entry) => JSON.stringify(entry);
+  const turn = lastTurn([
+    line({ type: "user", origin: { kind: "human" }, message: { content: "review" } }),
+    line({ type: "user", origin: { kind: "task-notification" }, message: { content: "HrisTransportDetails" } }),
+    line({ type: "assistant", message: { content: [{ type: "text", text: "long answer" }] } }),
+  ]);
+  assert.equal(turn.prompt, "review");
+  assert.equal(DETAIL.test("HrisTransportDetails"), false);
+  assert.equal(DETAIL.test("show details"), true);
+  assert.equal(DETAIL.test("объясни подробнее"), true);
+  console.log("ok");
+  process.exit(0);
+}
 
 const input = await readInput();
 if (input.stop_hook_active || !input.transcript_path) process.exit(0);

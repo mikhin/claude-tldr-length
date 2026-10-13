@@ -1,6 +1,6 @@
 {
   "name": "tldr-length",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Sends a long answer back once to be rewritten as a tldr",
   "author": {
     "name": "Yuri Mikhin",
